@@ -1,9 +1,7 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
-import UserType from "../../types/UserType";
-import BookType from "../../types/BookType";
-
-import { libraryActions } from "./librarySlice";
+import UserType from "@library/types/UserType";
+import BookType from "@library/types/BookType";
 
 const initialState: UserType = {
   books: [],
@@ -14,7 +12,7 @@ const userSlice = createSlice({
   name: "user",
   initialState,
   reducers: {
-    addBook(state, action: PayloadAction<BookType>) {
+    addBook(state: UserType, action: PayloadAction<BookType>) {
       const fundBook = state.books.find(
         (book) => book.ISBN === action.payload.ISBN
       );
@@ -27,13 +25,13 @@ const userSlice = createSlice({
       }
     },
 
-    returnBook(state, action: PayloadAction<string>) {
+    returnBook(state: UserType, action: PayloadAction<string>) {
       const fundBook = state.books.find((book) => book.ISBN === action.payload);
 
       if (fundBook!.number > 0) {
         fundBook!.number--;
-
-        
+      }else {
+        state.books = state.books.filter((book) => book.ISBN !== fundBook!.ISBN)
       }
     },
   },

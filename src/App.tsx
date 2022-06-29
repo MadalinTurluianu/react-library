@@ -1,26 +1,32 @@
-import { Route, Switch, Redirect } from "react-router-dom";
+import { Route, Switch, Redirect, BrowserRouter } from "react-router-dom";
 
 import "./App.css";
 
-import BooksList from "./pages/BooksList";
+import Header from "./components/navigation/Header";
+import Library from "./pages/Library";
+import User from "./pages/User";
 
-import BookType from "../types/BookType";
-
-const booksListUrl = "/book-list";
-const myBooksUrl = "/my-books";
+const urls = {
+  library: "/book-list",
+  user: "/my-books",
+};
 
 function App() {
   return (
-    <Switch>
-      <Route path="/" exact>
-        <Redirect to={booksListUrl} />
-      </Route>
-
-      <Route path={booksListUrl}>
-        <BooksList />
-      </Route>
-      <Route path={myBooksUrl}>MyBooks</Route>
-    </Switch>
+    <BrowserRouter>
+      <Header urls={urls}/>
+      <Switch>
+        <Route path="/" exact>
+          <Redirect to={urls.library} />
+        </Route>
+        <Route path={urls.library}>
+          <Library/>
+        </Route>
+        <Route path={urls.user}>
+          <User />
+        </Route>
+      </Switch>
+    </BrowserRouter>
   );
 }
 
