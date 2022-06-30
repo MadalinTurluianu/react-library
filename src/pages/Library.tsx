@@ -4,7 +4,7 @@ import { useSelector, useDispatch } from "react-redux";
 
 import Card from "../components/UI/Card";
 import BookList from "../components/book-list/BookList";
-import AddBookForm from "components/add-book/AddBookForm";
+import AddBookForm from "components/library/AddBookForm";
 
 import BookType from "@library/types/BookType";
 
@@ -21,6 +21,7 @@ const Library: FC = () => {
   const history = useHistory();
 
   const books: BookType[] = useSelector((state: any) => state.library.books);
+  const storeName: string = useSelector((state: any) => state.library.name);
 
   const borrowBookHandler = (book: BookType) => {
     dispatch(libraryActions.borrowBook(book.ISBN));
@@ -38,11 +39,15 @@ const Library: FC = () => {
           <button onClick={openAddBookFormHandler}>Add Book</button>
         </Route>
         <Route path={`${match.path}/add-book`}>
-          <AddBookForm/>
+          <AddBookForm baseUrl={match.path} />
         </Route>
       </Switch>
       <h1>Library</h1>
-      <BookList books={books} eventHandler={borrowBookHandler} />
+      <BookList
+        books={books}
+        eventHandler={borrowBookHandler}
+        owner={storeName}
+      />
     </Card>
   );
 };

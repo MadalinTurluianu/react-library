@@ -13,26 +13,18 @@ const userSlice = createSlice({
   initialState,
   reducers: {
     addBook(state: UserType, action: PayloadAction<BookType>) {
-      const fundBook = state.books.find(
-        (book) => book.ISBN === action.payload.ISBN
-      );
-
-      if (fundBook) {
-        fundBook.number++;
-        fundBook.title += ` | ${action.payload.title}`;
-      } else {
-        state.books.push(action.payload);
+      if (action.payload.number > 0) {
+        state.books.push({
+          ...action.payload,
+          number: 1,
+          borrowDate: new Date().getTime(),
+          id: `${action.payload.ISBN}.${new Date().getTime()}`,
+        });
       }
     },
 
-    returnBook(state: UserType, action: PayloadAction<string>) {
-      const fundBook = state.books.find((book) => book.ISBN === action.payload);
-
-      if (fundBook!.number > 0) {
-        fundBook!.number--;
-      }else {
-        state.books = state.books.filter((book) => book.ISBN !== fundBook!.ISBN)
-      }
+    removeBook(state: UserType, action: PayloadAction<BookType>) {
+      state.books = state.books.filter((book) => book.id !== action.payload.id);
     },
   },
 });

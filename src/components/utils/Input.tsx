@@ -15,6 +15,7 @@ const Input: FC<InputType> = (props) => {
         onChange={props.onChange}
         onFocus={props.onFocus}
         onBlur={props.onBlur}
+        required={props.required}
       />
     </div>
   );

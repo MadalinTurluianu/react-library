@@ -7,7 +7,7 @@ import Library from "./pages/Library";
 import User from "./pages/User";
 
 const urls = {
-  library: "/book-list",
+  library: "/library-books",
   user: "/my-books",
 };
 
