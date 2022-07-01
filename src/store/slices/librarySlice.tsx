@@ -4,11 +4,7 @@ import BookType from "@library/types/BookType";
 import LibraryType from "@library/types/LibraryType";
 
 const initialState: LibraryType = {
-  books: [
-    { title: "book1", ISBN: "1", cost: 1, number: 3 },
-    { title: "book2", ISBN: "2", cost: 2, number: 1 },
-    { title: "book3", ISBN: "3", cost: 3, number: 7 },
-  ],
+  books: [],
 };
 
 const librarySlice = createSlice({
@@ -51,9 +47,14 @@ const librarySlice = createSlice({
         fundBook!.number--;
       }
     },
+
+    addAllBooks(state: LibraryType, action: PayloadAction<BookType[]>) {
+      state.books = action.payload;
+    },
   },
 });
 
 export const libraryActions = librarySlice.actions;
+
 
 export default librarySlice;

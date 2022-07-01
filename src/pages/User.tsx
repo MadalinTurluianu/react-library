@@ -1,32 +1,46 @@
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
+import { Route, useHistory, useRouteMatch } from "react-router-dom";
+import { MouseEventHandler, useState } from "react";
 
 import Card from "../components/UI/Card";
 import BookList from "../components/book-list/BookList";
+import ReturnModal from "components/user/ReturnModal";
 
 import BookType from "@library/types/BookType";
 
-import { Route, useHistory, useRouteMatch } from "react-router-dom";
-import { useState } from "react";
-import ReturnModal from "components/user/ReturnModal";
+import { userActions } from "store/slices/userSlice";
+import { libraryActions } from "store/slices/librarySlice";
+
 
 const User = () => {
   const [currentBook, setCurrentBook] = useState<BookType | null>(null);
   const match = useRouteMatch();
-  const history = useHistory()
+  const history = useHistory();
+  const dispatch = useDispatch()
 
   const books: BookType[] = useSelector((state: any) => state.user.books);
-  const storeName: string = useSelector((state: any) => state.user.name);
 
   const returnButtonClickHandler = (book: BookType) => {
     setCurrentBook(book);
-    history.push(`${match.path}/return-${book!.id}`)
+    history.push(`${match.path}/return-${book!.id}`);
   };
+
+  const closeModalHandler = () => {
+    history.goBack();
+    setCurrentBook(null);
+  };
+
+  const paymentHandler: MouseEventHandler = () => {
+    dispatch(userActions.removeBook(currentBook!))
+    dispatch(libraryActions.returnBook(currentBook!))
+    closeModalHandler();
+  }
 
   return (
     <Card>
       {currentBook && (
         <Route path={`${match.path}/return-${currentBook!.id}`} exact>
-          <ReturnModal book={currentBook!} />
+          <ReturnModal book={currentBook!} closeModalHandler={closeModalHandler} onPay={paymentHandler}/>
         </Route>
       )}
 
@@ -34,7 +48,7 @@ const User = () => {
       <BookList
         books={books}
         eventHandler={returnButtonClickHandler}
-        owner={storeName}
+        owner="user"
       />
     </Card>
   );

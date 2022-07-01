@@ -21,7 +21,6 @@ const Library: FC = () => {
   const history = useHistory();
 
   const books: BookType[] = useSelector((state: any) => state.library.books);
-  const storeName: string = useSelector((state: any) => state.library.name);
 
   const borrowBookHandler = (book: BookType) => {
     dispatch(libraryActions.borrowBook(book.ISBN));
@@ -46,7 +45,7 @@ const Library: FC = () => {
       <BookList
         books={books}
         eventHandler={borrowBookHandler}
-        owner={storeName}
+        owner="library"
       />
     </Card>
   );

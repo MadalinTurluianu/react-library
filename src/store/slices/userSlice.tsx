@@ -5,7 +5,6 @@ import BookType from "@library/types/BookType";
 
 const initialState: UserType = {
   books: [],
-  name: "",
 };
 
 const userSlice = createSlice({
@@ -26,6 +25,10 @@ const userSlice = createSlice({
     removeBook(state: UserType, action: PayloadAction<BookType>) {
       state.books = state.books.filter((book) => book.id !== action.payload.id);
     },
+
+    addAllBooks(state: UserType, action: PayloadAction<BookType[]>) {
+      state.books = action.payload;
+    } 
   },
 });
 

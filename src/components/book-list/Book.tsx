@@ -9,10 +9,10 @@ const Book: FC<{book: BookType}&{eventHandler?: MouseEventHandler, content: stri
   const book = props.book
   
   return <li className={classes.li}>
-    <p>{book.title}</p>
-    <p>{book.ISBN}</p>
-    <p>{book.cost}</p>
-    <p>{book.number}</p>
+    <p>{`Title: ${book.title}`}</p>
+    <p>{`ISBN: ${book.ISBN}`}</p>
+    <p>{`Price: ${book.cost}`}</p>
+    <p>{`Amount: ${book.number}`}</p>
     <button onClick={props.eventHandler}>{props.content}</button>
   </li>
 };

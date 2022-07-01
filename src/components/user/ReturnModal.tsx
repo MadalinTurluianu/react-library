@@ -1,25 +1,29 @@
 import { FC, MouseEventHandler } from "react";
-import { useDispatch } from "react-redux";
 
 import BookType from "@library/types/BookType";
 
-import { userActions } from "store/slices/userSlice";
-import { libraryActions } from "store/slices/librarySlice";
+import Card from "components/UI/Card";
 
-const ReturnModal: FC<{book: BookType}> = (props) => {
-  const dispatch = useDispatch();
-
-  const paymentHandler: MouseEventHandler = () => {
-    dispatch(userActions.removeBook(props.book));
-    dispatch(libraryActions.returnBook(props.book))
-  };
+const ReturnModal: FC<{
+  book: BookType;
+  closeModalHandler: MouseEventHandler;
+  onPay: MouseEventHandler;
+}> = (props) => {
+  const nowTime = new Date().getTime();
+  const borrowedPeriod = Math.floor(
+    (nowTime - props.book.borrowDate!) / 1000 / 60 / 60 / 24
+  );
+  const daysLate = borrowedPeriod - 24 > 0 ? borrowedPeriod - 24 : 0;
+  const content = `To return the book you have to pay ${
+    props.book.cost + (props.book.cost * daysLate) / 100
+  }$`;
 
   return (
-    <div>
-      <p>{props.book.cost}</p>
-      <button onClick={paymentHandler}>Pay</button>
-      <button>Cancel</button>
-    </div>
+    <Card>
+      <p>{content}</p>
+      <button onClick={props.onPay}>Pay</button>
+      <button onClick={props.closeModalHandler}>Cancel</button>
+    </Card>
   );
 };
 
