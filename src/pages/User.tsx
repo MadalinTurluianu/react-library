@@ -44,7 +44,7 @@ const User = () => {
         </Route>
       )}
 
-      <h1>User</h1>
+      <h1 className="font-bold">User</h1>
       <BookList
         books={books}
         eventHandler={returnButtonClickHandler}

@@ -35,13 +35,13 @@ const Library: FC = () => {
     <Card>
       <Switch>
         <Route path={match.path} exact>
-          <button onClick={openAddBookFormHandler}>Add Book</button>
+          <button className="my-5 classicButton" onClick={openAddBookFormHandler}>Add Book</button>
         </Route>
         <Route path={`${match.path}/add-book`}>
           <AddBookForm baseUrl={match.path} />
         </Route>
       </Switch>
-      <h1>Library</h1>
+      <h1 className="font-bold">Library</h1>
       <BookList
         books={books}
         eventHandler={borrowBookHandler}

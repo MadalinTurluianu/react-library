@@ -1,9 +1,7 @@
 import { FC, PropsWithChildren } from "react";
 
-import classes from "./Card.module.css"
-
 const Card: FC<PropsWithChildren> = (props) => {
-  return <div className={classes.card}>{props.children}</div>;
+  return <div className="flex flex-col items-center">{props.children}</div>;
 };
 
 export default Card;

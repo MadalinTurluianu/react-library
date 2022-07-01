@@ -1,16 +1,14 @@
 import { useDispatch, useSelector } from "react-redux";
 import { Route, Switch, Redirect, BrowserRouter } from "react-router-dom";
 
-import "./App.css";
-
 import Header from "./components/navigation/Header";
 import Library from "./pages/Library";
 import User from "./pages/User";
 
 import { useEffect } from "react";
 
-import { libraryActions } from "store/slices/librarySlice";
-import { userActions } from "store/slices/userSlice";
+import { libraryActions } from "./store/slices/librarySlice";
+import { userActions } from "./store/slices/userSlice";
 import BookType from "./types/BookType";
 
 const urls = {
@@ -73,7 +71,7 @@ function App() {
       .catch((error) => {
         console.log(error);
       });
-  }, []);
+  }, [dispatch]);
 
   return (
     <BrowserRouter>
