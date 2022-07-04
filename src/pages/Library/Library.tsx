@@ -2,17 +2,17 @@ import { useSelector, useDispatch } from "react-redux";
 
 //import classes from "./Library.module.css"
 
-import Card from "../components/UI/Card";
-import BookList from "../components/book-list/BookList";
-import AddBookForm from "components/library/AddBookForm";
+import Card from "common/UI/Card/Card";
+import BookList from "common/components/BookList/BookList";
+import AddBookForm from "pages/Library/components/AddBookForm/AddBookForm";
 
-import BookType from "@library/types/BookType";
+import BookType from "common/types/BookType";
 
 import { FC } from "react";
 import { Route, Switch, useRouteMatch, useHistory } from "react-router-dom";
 
-import { libraryActions } from "../store/slices/librarySlice";
-import { userActions } from "../store/slices/userSlice";
+import { libraryActions } from "store/slices/librarySlice";
+import { userActions } from "store/slices/userSlice";
 
 const Library: FC = () => {
   const dispatch = useDispatch();
@@ -35,13 +35,13 @@ const Library: FC = () => {
     <Card>
       <Switch>
         <Route path={match.path} exact>
-          <button className="my-5 classicButton" onClick={openAddBookFormHandler}>Add Book</button>
+          <button className="my-5 index__classic-button" onClick={openAddBookFormHandler}>Add Book</button>
         </Route>
         <Route path={`${match.path}/add-book`}>
           <AddBookForm baseUrl={match.path} />
         </Route>
       </Switch>
-      <h1 className="font-bold">Library</h1>
+      <h1 className="index__classic-h1">Library</h1>
       <BookList
         books={books}
         eventHandler={borrowBookHandler}

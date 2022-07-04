@@ -1,10 +1,12 @@
 import { FC } from "react";
 
-import InputType from "@library/types/InputType";
+import InputType from "common/types/InputType";
+
+import classes from "./Input.module.css";
 
 const Input: FC<InputType> = (props) => {
   return (
-    <div>
+    <div className={classes.container}>
       {props.label && (
         <label htmlFor={props.id ? props.id : ""}>{props.label}</label>
       )}

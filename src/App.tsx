@@ -1,15 +1,15 @@
 import { useDispatch, useSelector } from "react-redux";
 import { Route, Switch, Redirect, BrowserRouter } from "react-router-dom";
 
-import Header from "./components/navigation/Header";
-import Library from "./pages/Library";
-import User from "./pages/User";
+import Header from "common/components/Header/Header";
+import Library from "pages/Library/Library";
+import User from "pages/User/User";
 
 import { useEffect } from "react";
 
-import { libraryActions } from "./store/slices/librarySlice";
-import { userActions } from "./store/slices/userSlice";
-import BookType from "./types/BookType";
+import { libraryActions } from "store/slices/librarySlice";
+import { userActions } from "store/slices/userSlice";
+import BookType from "common/types/BookType";
 
 const urls = {
   library: "/library-books",
@@ -21,27 +21,6 @@ function App() {
   const userBooks = useSelector((state: any) => state.user.books);
 
   const dispatch = useDispatch();
-
-  useEffect(() => {
-    const sendData = async (allBooks: {
-      libraryBooks: BookType[];
-      userBooks: BookType[];
-    }) => {
-      const response = await fetch(
-        "https://react-practice-ac818-default-rtdb.europe-west1.firebasedatabase.app/books.json",
-        {
-          method: "PUT",
-          body: JSON.stringify(allBooks),
-        }
-      );
-
-      if (!response.ok) {
-        throw new Error(response.statusText);
-      }
-    };
-
-    sendData({libraryBooks: libraryBooks, userBooks: userBooks});
-  }, [libraryBooks, userBooks]);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -72,6 +51,27 @@ function App() {
         console.log(error);
       });
   }, [dispatch]);
+
+  useEffect(() => {
+    const sendData = async (allBooks: {
+      libraryBooks: BookType[];
+      userBooks: BookType[];
+    }) => {
+      const response = await fetch(
+        "https://react-practice-ac818-default-rtdb.europe-west1.firebasedatabase.app/books.json",
+        {
+          method: "PUT",
+          body: JSON.stringify(allBooks),
+        }
+      );
+
+      if (!response.ok) {
+        throw new Error(response.statusText);
+      }
+    };
+
+    sendData({ libraryBooks: libraryBooks, userBooks: userBooks });
+  }, [libraryBooks, userBooks]);
 
   return (
     <BrowserRouter>

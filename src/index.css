@@ -1,7 +1,46 @@
-.classicButton {
-  @apply bg-white hover:bg-gray-100 text-gray-800 font-semibold py-1 px-2 border border-gray-400 rounded shadow text-sm;
-}
-
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer components {
+  .index__reverse-button {
+    @apply hover:text-red-600 
+    hover:border-red-600 
+    border-gray-600 
+    text-gray-800 
+    font-semibold 
+    py-1 
+    px-2 
+    border 
+    rounded 
+    shadow 
+    text-sm 
+    bg-white
+    min-w-[2rem]
+    h-8;
+  }
+  .index__classic-button {
+    @apply hover:bg-red-600
+    hover:border-red-600 
+    border-black
+    text-white
+    font-semibold 
+    py-1 
+    px-2 
+    border 
+    rounded 
+    shadow 
+    text-sm  
+    bg-black
+    min-w-[2rem]
+    h-8;
+  }
+  .index__classic-h1 {
+    @apply font-bold 
+    text-2xl 
+    underline 
+    underline-offset-8 
+    text-red-600 
+    my-5;
+  }
+}

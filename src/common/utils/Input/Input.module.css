@@ -1,0 +1,11 @@
+.container{
+  @apply flex justify-around w-full my-2
+}
+
+.container label {
+  @apply font-semibold
+}
+
+.container input {
+  @apply w-9/12 focus:outline-none border-b-gray-300 border-b
+}

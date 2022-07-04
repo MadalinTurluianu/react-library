@@ -1,8 +1,10 @@
 import { FC, MouseEventHandler } from "react";
 
-import BookType from "@library/types/BookType";
+import BookType from "common/types/BookType";
 
-import Card from "components/UI/Card";
+import Card from "common/UI/Card/Card";
+
+import classes from "./ReturnModal.module.css";
 
 const ReturnModal: FC<{
   book: BookType;
@@ -19,10 +21,19 @@ const ReturnModal: FC<{
   }$`;
 
   return (
-    <Card>
+    <Card classes={classes.container}>
       <p>{content}</p>
-      <button onClick={props.onPay}>Pay</button>
-      <button onClick={props.closeModalHandler}>Cancel</button>
+      <div>
+        <button
+          className="index__reverse-button"
+          onClick={props.closeModalHandler}
+        >
+          Cancel
+        </button>
+        <button className="index__classic-button" onClick={props.onPay}>
+          Pay
+        </button>
+      </div>
     </Card>
   );
 };

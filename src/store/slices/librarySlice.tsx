@@ -1,7 +1,7 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
-import BookType from "@library/types/BookType";
-import LibraryType from "@library/types/LibraryType";
+import BookType from "common/types/BookType";
+import LibraryType from "store/types/LibraryType";
 
 const initialState: LibraryType = {
   books: [],

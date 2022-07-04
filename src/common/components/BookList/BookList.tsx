@@ -1,12 +1,12 @@
 import { FC } from "react";
 
-import BookType from "@library/types/BookType";
+import BookType from "common/types/BookType";
 
-import Book from "./Book";
+import Book from "common/components/BookList/components/Book/Book";
 
-const BookList: FC<{books: BookType[]}&{eventHandler?: Function, owner: string}> = (props) => {  
+const BookList: FC<{eventHandler?: Function, owner: string, books: BookType[]}> = (props) => {  
   return (
-    <ul>
+    <ul className="w-96 mt-5">
       {props.books.map((book) => (
         <Book
           book={book}

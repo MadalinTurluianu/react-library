@@ -11,9 +11,11 @@ import { libraryActions } from "store/slices/librarySlice";
 
 import { useHistory } from "react-router-dom";
 
-import Input from "components/utils/Input";
+import Input from "common/utils/Input/Input";
 
-import BookType from "@library/types/BookType";
+import BookType from "common/types/BookType";
+
+import classes from "./AddBookForm.module.css";
 
 const AddBookForm: FC<{ baseUrl: string }> = (props) => {
   const [title, setTitle] = useState("");
@@ -79,7 +81,7 @@ const AddBookForm: FC<{ baseUrl: string }> = (props) => {
   };
 
   return (
-    <form onSubmit={submitHandler}>
+    <form onSubmit={submitHandler} className={classes.form}>
       <div>
         <Input
           id="Title"
@@ -106,11 +108,12 @@ const AddBookForm: FC<{ baseUrl: string }> = (props) => {
           required={true}
         />
       </div>
-      <div>
-        <button>Submit</button>
-        <button type="button" onClick={cancelHandler}>
+      <div className={classes["buttons-container"]}>
+        <button className="index__reverse-button" type="button" onClick={cancelHandler}>
           Cancel
         </button>
+        <button className="index__classic-button">Submit</button>
+
       </div>
     </form>
   );

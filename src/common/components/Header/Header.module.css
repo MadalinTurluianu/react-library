@@ -1,0 +1,7 @@
+.header a{
+  @apply hover:text-red-400 
+} 
+
+.header button {
+  @apply text-white text-xl font-bold mx-3
+}

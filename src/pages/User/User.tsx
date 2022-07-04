@@ -2,11 +2,11 @@ import { useSelector, useDispatch } from "react-redux";
 import { Route, useHistory, useRouteMatch } from "react-router-dom";
 import { MouseEventHandler, useState } from "react";
 
-import Card from "../components/UI/Card";
-import BookList from "../components/book-list/BookList";
-import ReturnModal from "components/user/ReturnModal";
+import Card from "common/UI/Card/Card";
+import BookList from "common/components/BookList/BookList";
+import ReturnModal from "pages/User/components/ReturnModal/ReturnModal";
 
-import BookType from "@library/types/BookType";
+import BookType from "common/types/BookType";
 
 import { userActions } from "store/slices/userSlice";
 import { libraryActions } from "store/slices/librarySlice";
@@ -44,7 +44,7 @@ const User = () => {
         </Route>
       )}
 
-      <h1 className="font-bold">User</h1>
+      <h1 className="index__classic-h1">User</h1>
       <BookList
         books={books}
         eventHandler={returnButtonClickHandler}

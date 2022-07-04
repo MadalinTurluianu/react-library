@@ -1,0 +1,14 @@
+.container{
+  @apply
+  border-b
+  border-red-600
+  p-5
+}
+
+.container div {
+  @apply
+  flex
+  justify-around
+  w-full
+  mt-5
+}
