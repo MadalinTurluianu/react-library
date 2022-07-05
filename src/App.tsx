@@ -1,5 +1,5 @@
 import { useDispatch, useSelector } from "react-redux";
-import { Route, Switch, Redirect, BrowserRouter } from "react-router-dom";
+import { Route, Switch, Redirect, useRouteMatch } from "react-router-dom";
 
 import Header from "common/components/Header/Header";
 import Library from "pages/Library/Library";
@@ -11,9 +11,11 @@ import { libraryActions } from "store/slices/librarySlice";
 import { userActions } from "store/slices/userSlice";
 import BookType from "common/types/BookType";
 
+const baseUrl = "/react-library";
 const urls = {
-  library: "/library-books",
-  user: "/my-books",
+  base: baseUrl,
+  library: baseUrl + "/library-books",
+  user: baseUrl + "/my-books",
 };
 
 function App() {
@@ -74,10 +76,10 @@ function App() {
   }, [libraryBooks, userBooks]);
 
   return (
-    <BrowserRouter>
+    <>
       <Header urls={urls} />
       <Switch>
-        <Route path="/" exact>
+        <Route path={urls.base} exact>
           <Redirect to={urls.library} />
         </Route>
         <Route path={urls.library}>
@@ -87,7 +89,7 @@ function App() {
           <User />
         </Route>
       </Switch>
-    </BrowserRouter>
+    </>
   );
 }
 

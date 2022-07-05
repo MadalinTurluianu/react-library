@@ -14,6 +14,7 @@ type InputType = {
   onClick?: MouseEventHandler;
   type: string
   required?: boolean;
+  invalid?: null | boolean
 };
 
 export default InputType;

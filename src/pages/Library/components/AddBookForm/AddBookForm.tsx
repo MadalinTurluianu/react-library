@@ -1,73 +1,80 @@
 import {
   FC,
   FormEventHandler,
-  useState,
   ChangeEventHandler,
   MouseEventHandler,
+  useReducer,
 } from "react";
-
 import { useDispatch } from "react-redux";
 import { libraryActions } from "store/slices/librarySlice";
-
 import { useHistory } from "react-router-dom";
-
 import Input from "common/utils/Input/Input";
-
 import BookType from "common/types/BookType";
-
+import InputsObjectType from "./types/InputsObjectType";
+import ActionTypeType from "./types/ActionTypeType";
 import classes from "./AddBookForm.module.css";
+import validateUserInput from "./helpers/validateUserInput";
+
+const inputsInitialState: InputsObjectType = {
+  ISBN: {
+    value: "",
+    isValid: false
+  },
+  title: {
+    value: "",
+    isValid: false
+  },
+  cost: {
+    value: "",
+    isValid: false
+  },
+
+  allValid: false
+}
+
+const inputsReducer = (
+  state: InputsObjectType,
+  action: {
+    type: ActionTypeType,
+    payload: string;
+  }
+) => {
+  const newInputs = { ...state };
+
+  if (newInputs[action.type]) {
+    newInputs[action.type].value = action.payload;
+    newInputs[action.type].isValid = validateUserInput(action.type, action.payload);
+  }
+
+  newInputs.allValid = newInputs.ISBN.isValid && newInputs.title.isValid && newInputs.cost.isValid
+  
+  return newInputs;
+};
 
 const AddBookForm: FC<{ baseUrl: string }> = (props) => {
-  const [title, setTitle] = useState("");
-  const [ISBN, setISBN] = useState("");
-  const [cost, setCost] = useState("");
+  const [inputs, dispatchInputs] = useReducer(inputsReducer, inputsInitialState);
 
   const dispatch = useDispatch();
 
   const history = useHistory();
 
   const changeHandler: ChangeEventHandler<HTMLInputElement> = (event) => {
-    if (event.target.id === "Title") {
-      setTitle(event.target.value);
-    } else if (event.target.id === "ISBN") {
-      setISBN(event.target.value);
-    } else if (event.target.id === "Price") {
-      setCost(event.target.value);
-    }
-  };
-
-  const validateUserInput = () => {
-    if (title.trim() === "") {
-      return false;
-    }
-
-    if (
-      !(
-        ISBN.trim().match(/\d+?-\d+?-\d+?-\d+?-\d+?/g) &&
-        ISBN.trim().length === 17
-      )
-    ) {
-      return false;
-    }
-
-    if (!(Number(cost) > 0)) {
-      return false;
-    }
-
-    return true;
+    dispatchInputs({ type: event.target.id as ActionTypeType, payload: event.target.value });
   };
 
   const submitHandler: FormEventHandler = (event) => {
     event.preventDefault();
 
-    const inputsAreValid = validateUserInput();
+    console.log(inputs);
+    
+    if (!inputs.allValid) return;
+    console.log("here");
 
-    if (!inputsAreValid) return;
-
+    
     const book: BookType = {
-      title: title.trim(),
-      ISBN: ISBN.trim(),
-      cost: Number(cost),
+      title: inputs.title.value.trim(),
+      ISBN: inputs.ISBN.value.trim(),
+      cost: Number(inputs.cost.value),
       number: 1,
     };
 
@@ -84,10 +91,10 @@ const AddBookForm: FC<{ baseUrl: string }> = (props) => {
     <form onSubmit={submitHandler} className={classes.form}>
       <div>
         <Input
-          id="Title"
+          id="title"
           type="text"
           label="Title"
-          value={title}
+          value={inputs.title.value}
           onChange={changeHandler}
           required={true}
         />
@@ -95,25 +102,28 @@ const AddBookForm: FC<{ baseUrl: string }> = (props) => {
           id="ISBN"
           type="text"
           label="ISBN"
-          value={ISBN}
+          value={inputs.ISBN.value}
           onChange={changeHandler}
           required={true}
         />
         <Input
-          id="Price"
+          id="cost"
           type="number"
           label="Price"
-          value={cost}
+          value={inputs.cost.value}
           onChange={changeHandler}
           required={true}
         />
       </div>
       <div className={classes["buttons-container"]}>
-        <button className="index__reverse-button" type="button" onClick={cancelHandler}>
+        <button
+          className="index__reverse-button"
+          type="button"
+          onClick={cancelHandler}
+        >
           Cancel
         </button>
         <button className="index__classic-button">Submit</button>
-
       </div>
     </form>
   );

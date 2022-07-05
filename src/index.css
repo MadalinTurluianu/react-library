@@ -16,7 +16,7 @@
     shadow 
     text-sm 
     bg-white
-    min-w-[2rem]
+    min-w-[4rem]
     h-8;
   }
   .index__classic-button {
@@ -32,7 +32,7 @@
     shadow 
     text-sm  
     bg-black
-    min-w-[2rem]
+    min-w-[4rem]
     h-8;
   }
   .index__classic-h1 {

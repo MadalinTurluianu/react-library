@@ -1,6 +1,6 @@
 import { FC } from "react";
 
-import InputType from "common/types/InputType";
+import InputType from "common/utils/Input/InputType";
 
 import classes from "./Input.module.css";
 

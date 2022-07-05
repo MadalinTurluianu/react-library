@@ -14,7 +14,7 @@ const Book: FC<{eventHandler?: MouseEventHandler, content: string, book: BookTyp
     <p><span>ISBN: </span>{book.ISBN}</p>
     </div>
     <div>
-    <p><span>Price: </span>{book.cost}</p>
+    <p><span>Price: </span>{`${book.cost} $`}</p>
     <p><span>Amount: </span>{book.number}</p>
     </div>
     <button className="index__classic-button" onClick={props.eventHandler}>{props.content}</button>
